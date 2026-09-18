@@ -1,0 +1,129 @@
+<div class="form-container shadow">
+  <header class="emp-head">
+    <img src="/assets/img/login/logo.png" alt="Apex" class="emp-logo animated-logo" />
+    <h2 class="form-title animated-title">
+      {{ isEdit ? 'Modifique su Usuario' : 'Registre un nuevo usuario' }}
+    </h2>
+  </header>
+
+  <form #f="ngForm" (ngSubmit)="guardar(f)" class="ticket-form" novalidate>
+
+    <!-- Nombre de usuario -->
+    <div class="form-group">
+      <label for="nombreusuario">Usuario <span>*</span></label>
+      <input id="nombreusuario" name="nombreusuario" [(ngModel)]="form.nombreusuario" required
+             placeholder="Ej. usuario123" autocomplete="username" autocapitalize="none" spellcheck="false"/>
+      <div class="invalid" *ngIf="f.submitted && !form.nombreusuario">
+        El usuario es obligatorio.
+      </div>
+    </div>
+
+    <!-- Contraseña -->
+    <div class="form-group">
+      <label for="contrasena">Contraseña <span *ngIf="!isEdit">*</span></label>
+      <input id="contrasena" name="contrasena" [(ngModel)]="form.contrasena" [required]="!isEdit"
+             [placeholder]="isEdit ? 'Dejar vacío para no cambiar' : ''" type="password"
+             autocomplete="new-password"/>
+      <div class="invalid" *ngIf="f.submitted && !form.contrasena && !isEdit">
+        La contraseña es obligatoria.
+      </div>
+    </div>
+
+    <!-- Nombres -->
+    <div class="form-group">
+      <label for="nombres">Nombres <span>*</span></label>
+      <input id="nombres" name="nombres" [(ngModel)]="form.nombres" required placeholder="Ej. Juan"/>
+      <div class="invalid" *ngIf="f.submitted && !form.nombres">El nombre es obligatorio.</div>
+    </div>
+
+    <!-- Apellidos -->
+    <div class="form-group">
+      <label for="apellidos">Apellidos <span>*</span></label>
+      <input id="apellidos" name="apellidos" [(ngModel)]="form.apellidos" required placeholder="Ej. Pérez"/>
+      <div class="invalid" *ngIf="f.submitted && !form.apellidos">El apellido es obligatorio.</div>
+    </div>
+
+    <!-- Documento -->
+    <div class="form-group">
+      <label for="documento">Documento <span>*</span></label>
+      <input id="documento" name="documento" [(ngModel)]="form.documento" required maxlength="15"
+             pattern="^[0-9A-Za-z-_.]{6,15}$" placeholder="Ej. 12345678"/>
+      <div class="invalid" *ngIf="f.submitted && !form.documento">El documento es obligatorio.</div>
+    </div>
+
+    <!-- Celular -->
+    <div class="form-group">
+      <label for="celular">Celular <span>*</span></label>
+      <input id="celular" name="celular" [(ngModel)]="form.celular" required placeholder="Ej. 987654321"/>
+      <div class="invalid" *ngIf="f.submitted && !form.celular">El celular es obligatorio.</div>
+      <div class="invalid" *ngIf="f.submitted && !celularValid()">El celular debe contener solo números.</div>
+    </div>
+
+    <!-- Correo -->
+    <div class="form-group">
+      <label for="correo">Correo <span>*</span></label>
+      <input id="correo" name="correo" type="email" [(ngModel)]="form.correo" required placeholder="Ej. correo@empresa.com"/>
+      <div class="invalid" *ngIf="f.submitted && !form.correo">El correo es obligatorio.</div>
+    </div>
+
+    <!-- Estado -->
+    <div class="form-group">
+      <label for="estado">Estado</label>
+      <select id="estado" name="estado" [(ngModel)]="form.estado">
+        <option [ngValue]="1">Activo</option>
+        <option [ngValue]="0">Inactivo</option>
+      </select>
+    </div>
+
+    <!-- Rol con autocompletar -->
+    <div class="form-group" style="position: relative;">
+      <label for="rol">Rol <span>*</span></label>
+      <input type="text" id="rolInput" [(ngModel)]="rolInput" [ngModelOptions]="{ standalone: true }"
+             placeholder="Selecciona un rol…" class="ticket-form-input"
+             (focus)="openRolDropdown()" (input)="filterRoles()" autocomplete="off"/>
+      <div class="dropdown-list" *ngIf="showRolDropdown && filteredRoles.length">
+        <div class="dropdown-item" *ngFor="let r of filteredRoles" (mousedown)="selectRol(r)">
+          {{ r.descripcion }}
+        </div>
+      </div>
+      <div class="invalid" *ngIf="f.submitted && !form.rol.idrol">Debe seleccionar un rol.</div>
+    </div>
+
+    <!-- Empresa con autocompletar (solo si aplica) -->
+    <div class="form-group" *ngIf="form.rol.tiporol !== 1" style="position: relative;">
+      <label for="empresa">Empresa <span>*</span></label>
+      <input type="text" id="empresaInput" [(ngModel)]="empresaInput" [ngModelOptions]="{ standalone: true }"
+             placeholder="Selecciona una empresa…" class="ticket-form-input"
+             (focus)="openEmpresaDropdown()" (input)="filterEmpresas()" autocomplete="off"/>
+      <div class="dropdown-list" *ngIf="showEmpresaDropdown && filteredEmpresas.length">
+        <div class="dropdown-item" *ngFor="let e of filteredEmpresas" (mousedown)="selectEmpresa(e)">
+          {{ e.razonsocial }} ({{ e.ruc }})
+        </div>
+      </div>
+      <div class="invalid" *ngIf="f.submitted && !form.empresa.idempresa">Debe seleccionar una empresa.</div>
+    </div>
+
+    <!-- Botones centrados -->
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="irLista()">Cancelar</button>
+      <button type="submit" class="btn-submit">{{ isEdit ? 'Actualizar' : 'Guardar' }}</button>
+    </div>
+
+    <!-- Mensajes de error -->
+    <div *ngIf="error" class="alert err">
+      <i class="bi bi-exclamation-triangle-fill"></i> {{ error }}
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal-overlay" *ngIf="mostrarConfirmacion" (click)="cerrarConfirmacion()">
+      <div class="modal-card shadow" (click)="$event.stopPropagation()">
+        <h2>{{ CabeceraMensaje }}</h2>
+        <p>{{ mensajeConfirmacion }}</p>
+        <div class="modal-actions">
+          <button class="btn-submit" (click)="cerrarConfirmacion()">Aceptar</button>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>

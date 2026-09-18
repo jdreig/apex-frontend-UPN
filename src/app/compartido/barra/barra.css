@@ -1,0 +1,231 @@
+/* --------------------
+   NAVBAR (barra superior)
+-------------------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #244e81; /* azul oscuro moderno */
+  color: white;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.navbar-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.navbar-options {
+  display: flex;
+  gap: 15px;
+}
+
+.navbar-options a {
+  text-decoration: none;
+  font-weight: 500;
+  color: white;
+}
+
+.btn-logout {
+  background: #e94560;
+  padding: 8px 15px;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.btn-logout:hover {
+  background: #ff5c7a;
+}
+
+/* Botón hamburguesa */
+.menu-toggle {
+  display: none;
+  font-size: 1.5rem;
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .navbar-options {
+    display: none;
+    flex-direction: column;
+    background: #1a1a2e;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  }
+
+  .navbar-options.open {
+    display: flex;
+  }
+}
+
+/* --------------------
+   MODAL de confirmación
+-------------------- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(31, 41, 55, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal-card {
+  background: #1e293b; /* gris oscuro moderno */
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  color: #f1f5f9; /* texto claro */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  animation: fadeInUp 0.3s ease;
+}
+
+.modal-card h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.modal-card p {
+  color: #cbd5e1; /* gris claro */
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-cancel {
+  background: transparent;
+  border: 1px solid #94a3b8;
+  color: #f1f5f9;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-cancel:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #e94560, #ff5c7a);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-confirm:hover {
+  transform: scale(1.05);
+}
+
+/* Animación */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 60px;
+  background-color: #1f2937;
+  color: #fff;
+}
+
+.navbar-user {
+  font-weight: 600;
+  font-size: 1rem;
+  color: #fff;
+  max-width: 180px;         /* ancho máximo antes de truncar */
+  overflow: hidden;         /* oculta el desbordamiento */
+  white-space: nowrap;      /* no permite salto de línea */
+  text-overflow: ellipsis;  /* agrega puntos suspensivos */
+  text-align: right;        /* alinea el texto a la derecha */
+}
+
+.app-logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.navbar-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+/* Ellipsis para título y usuario */
+.navbar-title,
+.navbar-user {
+  max-width: 400px;          /* Ajusta según tu layout */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Usuario en navbar */
+.navbar-user {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #fff;
+  margin-left: 10px;
+  text-align: right;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 480px) {
+  .navbar-user {
+    max-width: 100px;       /* reduce ancho disponible */
+    font-size: 0.9rem;      /* texto más pequeño */
+  }
+}

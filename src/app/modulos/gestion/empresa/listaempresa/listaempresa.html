@@ -1,0 +1,63 @@
+<app-barra></app-barra>
+
+<div class="emp-list emp-theme-light">
+  <div class="head">
+    <h2>Empresas</h2>
+    <div class="actions">
+      <button class="btn-primary" (click)="irCrear()"><i class="fas fa-plus"></i> Nueva empresa</button>
+    </div>
+  </div>
+
+  <div class="emp-card">
+    <div class="filters">
+      <input type="text" [(ngModel)]="filtro" placeholder="Buscar por RUC, razón social, correo…" />
+      <button class="btn-ghost" (click)="limpiar()" [disabled]="!filtro">Limpiar</button>
+
+      <div class="spacer"></div>
+
+      <div class="page-size">
+        <label>Mostrar</label>
+        <select [(ngModel)]="pageSize" (ngModelChange)="setPageSize($event)">
+          <option *ngFor="let n of pageSizeOptions" [ngValue]="n">{{ n }}</option>
+        </select>
+        <span class="muted">de {{ filtradas.length }}</span>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>RUC</th>
+            <th>Razón social</th>
+            <th>Dirección</th>
+            <th>Correo</th>
+            <th>Teléfono</th>
+            <th style="width:160px;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of paginadas">
+            <td class="mono">{{ e.ruc }}</td>
+            <td class="strong">{{ e.razonsocial }}</td>
+            <td>{{ e.direccion }}</td>
+            <td>{{ e.correo }}</td>
+            <td class="mono">{{ e.telefono }}</td>
+            <td class="actions-col">
+              <button class="btn-mini" (click)="irEditar(e)" title="Editar"><i class="fas fa-pen"></i></button>
+            </td>
+          </tr>
+          <tr *ngIf="paginadas.length === 0">
+            <td colspan="6" class="empty">Sin resultados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pager">
+      <button (click)="prev()" [disabled]="page === 1">Anterior</button>
+      <span>Página {{ page }} / {{ totalPages }}</span>
+      <button (click)="next()" [disabled]="page === totalPages">Siguiente</button>
+    </div>
+  </div>
+</div>

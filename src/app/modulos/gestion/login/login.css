@@ -1,0 +1,259 @@
+/* ===============================
+   THEME APEX (inspirado en apexamerica.com)
+   Actívalo con .theme-apex en un ancestro
+=================================*/
+.theme-apex{
+  /* Base más amable (azules petróleo) */
+  --bg-color: #0f2230;         /* fondo general */
+  --card-bg: #152a38;          /* paneles / cards */
+  --input-bg: #1b3342;         /* campos */
+  --text-light: #e6f0f4;       /* texto principal */
+  --text-secondary: #a9c2cf;   /* texto secundario */
+
+  /* Acentos “Apex” (aqua/teal) */
+  --primary-color: #00c1d4;    /* foco/outlines */
+  --btn-gradient-start: #00c1d4;
+  --btn-gradient-end:   #00a9bd;
+
+  /* Sombra */
+  --shadow-color: rgba(7, 20, 28, 0.45);
+}
+
+/* ===============================
+   BASE FX (preysop) + FONDO
+=================================*/
+.fx-grid{
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(56,230,176,0.08), transparent 60%),
+    radial-gradient(1000px 500px at 110% 110%, rgba(56,230,176,0.06), transparent 60%),
+    var(--bg-color);
+  overflow: hidden;
+  isolation: isolate;
+}
+.fx-grid::before{
+  content:"";
+  position:absolute;
+  inset:-200%;
+  background:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 14px);
+  animation: gridFloat 18s linear infinite;
+  pointer-events:none;
+  opacity:.55;
+}
+@keyframes gridFloat{ from{transform:translate3d(0,0,0)} to{transform:translate3d(0,-2%,0) rotate(.5deg)} }
+
+.orb{ position:absolute; border-radius:50%; filter:blur(24px); opacity:.27; pointer-events:none; }
+.orb-1{ width:320px;height:320px;background:radial-gradient(circle,var(--primary-color),transparent 70%); top:5%; left:5%; animation:floatOrb 14s ease-in-out infinite; }
+.orb-2{ width:260px;height:260px;background:radial-gradient(circle,var(--primary-color),transparent 70%); bottom:8%; right:8%; animation:floatOrb 12s ease-in-out infinite reverse; }
+@keyframes floatOrb{ 0%,100%{transform:translate(0)} 50%{transform:translate(6px,-12px)} }
+
+.scanline{ position:absolute; inset:0; background:linear-gradient(180deg,transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%); mix-blend-mode:overlay; animation:scan 6s linear infinite; pointer-events:none; }
+@keyframes scan{ 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
+
+/* Cuando el tema Apex está activo, suaviza los destellos al aqua */
+.theme-apex.fx-grid{
+  background:
+    radial-gradient(1200px 600px at 12% -8%, rgba(0,193,212,0.08), transparent 60%),
+    radial-gradient(1000px 500px at 112% 108%, rgba(0,169,189,0.06), transparent 60%),
+    var(--bg-color);
+}
+.theme-apex .orb-1,
+.theme-apex .orb-2{
+  background: radial-gradient(circle, var(--primary-color), transparent 70%);
+}
+
+/* ===============================
+   CARD LOGIN
+=================================*/
+.login-container{
+  position:relative;
+  width:min(460px,94vw);
+  padding:2.25rem 2rem;
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:1rem;
+  backdrop-filter:blur(10px);
+  box-shadow:0 10px 25px var(--shadow-color);
+}
+.login-container::after{
+  content:"";
+  position:absolute; inset:-1px; border-radius:inherit;
+  background:conic-gradient(from 180deg at 50% 50%, rgba(56,230,176,0.15), transparent 30%, transparent 70%, rgba(56,230,176,0.15));
+  filter:blur(10px); opacity:.5; z-index:-1;
+}
+/* Halo acorde al tema Apex */
+.theme-apex .login-container::after{
+  background: conic-gradient(from 180deg at 50% 50%,
+    color-mix(in srgb, var(--primary-color) 40%, transparent) 0%,
+    transparent 30%,
+    transparent 70%,
+    color-mix(in srgb, var(--primary-color) 40%, transparent) 100%);
+}
+
+/* Header */
+.login-header{ text-align:left; margin-bottom:1.25rem; }
+.login-header .app-logo{
+  display:block; width:100px; height:auto; margin:0 0 .75rem 0; object-fit:contain;
+  filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));
+}
+.login-header h1{ font-size:2rem; line-height:1.1; margin:0 0 .25rem 0; color:var(--text-light); }
+.login-header small{ color:rgba(255,255,255,.8); font-size:.95rem; }
+
+/* ===============================
+   CAMPOS + ICONOS (Bootstrap Icons)
+=================================*/
+.form-group{ margin-bottom:1rem; }
+.form-label{ font-weight:600; font-size:.9rem; color:rgba(255,255,255,.9); margin-bottom:.4rem; }
+
+.bi-field{ position:relative; }
+.bi-field > i.bi{
+  position:absolute; left:12px; top:50%; transform:translateY(-50%);
+  color:var(--text-secondary); font-size:1rem; pointer-events:none;
+}
+.form-control,
+.bi-input{
+  height:44px;
+  background:var(--input-bg) !important;
+  color:var(--text-light) !important;
+  border:1px solid rgba(255,255,255,0.10) !important;
+}
+.bi-input{ padding-left:40px !important; }
+.form-control::placeholder,
+.bi-input::placeholder{ color:var(--text-secondary); opacity:.85; }
+.form-control:focus,
+.bi-input:focus{
+  border-color:var(--primary-color) !important;
+  box-shadow:0 0 0 0.18rem rgba(56,230,176,0.22), 0 0 18px rgba(56,230,176,0.18);
+  outline:none;
+}
+
+/* Toggle ojo password */
+.toggle-pass{
+  position:absolute; right:8px; top:50%; transform:translateY(-50%);
+  width:40px; height:36px; border:0; background:transparent; border-radius:8px;
+  color:var(--text-secondary); display:grid; place-items:center; cursor:pointer;
+}
+.toggle-pass:hover{ background:rgba(255,255,255,.06); color:var(--text-light); }
+
+/* Autofill oscuro */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus{
+  -webkit-text-fill-color:var(--text-light);
+  -webkit-box-shadow:0 0 0 1000px var(--input-bg) inset;
+  transition:background-color 5000s ease-in-out 0s;
+}
+
+/* ===============================
+   BOTÓN + ESTADOS
+=================================*/
+.btn-main{
+  height:44px;
+  font-weight:700;
+  background: linear-gradient(135deg, var(--btn-gradient-start) 0%, var(--btn-gradient-end) 100%);
+  color:var(--text-dark);
+  border:none; border-radius:.5rem; width:100%;
+  box-shadow:0 4px 15px rgba(56,230,176,0.2);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+.btn-main:hover{ transform:translateY(-2px); box-shadow:0 6px 20px rgba(56,230,176,0.3); }
+.btn-main:active{ transform:translateY(1px); }
+.btn-main:disabled{ opacity:.95; filter:saturate(.9) brightness(.98); cursor:not-allowed; }
+
+.btn-main.shine{ position:relative; overflow:hidden; }
+.btn-main.shine::before{
+  content:""; position:absolute; left:-40%; top:0; bottom:0; width:40%;
+  transform:skewX(-20deg) translateX(-120%);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent);
+}
+.btn-main.shine:hover::before{ animation:sheen .9s ease; }
+@keyframes sheen{ from{transform:skewX(-20deg) translateX(-120%)} to{transform:skewX(-20deg) translateX(320%)} }
+
+.spinner{ width:18px; height:18px; border:2px solid rgba(255,255,255,0.35); border-top-color:var(--text-dark); border-radius:50%; display:inline-block; animation:spin .9s linear infinite; vertical-align:middle; }
+@keyframes spin{ to{ transform:rotate(360deg) } }
+
+/* Error shake (si no lo usas, puedes quitar la clase del HTML) */
+.error-shake{ animation:shake .4s ease both; }
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-6px)}
+  40%{transform:translateX(6px)}
+  60%{transform:translateX(-4px)}
+  80%{transform:translateX(4px)}
+}
+
+/* ===============================
+   LINKS
+=================================*/
+.access-links{ text-align:left; margin-top:1rem; }
+.access-links a{
+  color:var(--text-secondary) !important;
+  text-decoration:none;
+  margin-right:.4rem;
+  position:relative;
+}
+.access-links a:hover{ color:var(--primary-color) !important; text-decoration:underline; }
+.access-links a::after{
+  content:""; position:absolute; left:0; bottom:-2px; width:0%; height:1px;
+  background:var(--primary-color); transition:width .25s ease;
+}
+.access-links a:hover::after{ width:100%; }
+
+/* ===============================
+   ACCESIBILIDAD / MOVIMIENTO
+=================================*/
+@media (prefers-reduced-motion: reduce){
+  *{ animation:none !important; transition:none !important; }
+}
+
+/* ===============================
+   UTILIDADES Y REFINES DE UI
+=================================*/
+/* Centrado perfecto y anchos uniformes */
+.fx-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+}
+.login-container{ text-align: center; border-radius: 16px; }
+.login-header{ text-align: center !important; margin-bottom: 1.5rem; }
+.login-header .app-logo{ margin-left: auto; margin-right: auto; }
+.login-container form{ width: 100%; max-width: 360px; margin: 0 auto; }
+.form-group{ width: 100%; margin-left: auto; margin-right: auto; text-align: left; }
+.form-control, .bi-input{ width: 100% !important; box-sizing: border-box; }
+.toggle-pass{ right: 10px; }
+.btn-main{ width: 100% !important; display: inline-flex; align-items: center; justify-content: center; gap: .35rem; }
+.access-links{ text-align: center; max-width: 360px; margin: 1rem auto 0; }
+
+/* Caret, selección, espaciados y tipografía */
+.bi-input, .form-control{ caret-color: var(--primary-color); font-size: 16px; line-height: 1.25; letter-spacing: .2px; }
+.bi-input::selection, .form-control::selection{ background: rgba(56,230,176,.35); color: var(--text-dark); }
+.bi-input::-moz-selection, .form-control::-moz-selection{ background: rgba(56,230,176,.35); color: var(--text-dark); }
+.bi-input:focus::placeholder, .form-control:focus::placeholder{ color: rgba(255,255,255,.55); }
+
+.form-group{ margin-bottom: 1.1rem; }
+.form-label{ margin-bottom: .5rem; font-weight: 600; }
+.bi-field{ position: relative; }
+.bi-field > i.bi{ left: 12px; top: 50%; transform: translateY(-50%); }
+.bi-input{ padding-left: 40px !important; }
+
+.alert{ margin-top: .75rem; }
+.btn-main{ margin-top: .25rem; }
+.access-links{ margin-top: 1rem; }
+
+/* Tipografía UI nítida */
+:root{ --font-ui: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; }
+body{ font-family: var(--font-ui); }
+.login-header h1{ font-weight: 800; letter-spacing: .2px; }
+.form-label{ font-weight: 600; }
+
+/* Ajustes menores */
+.toggle-pass { height: 40px; }       /* alinear mejor el ojo */
+.app-logo { max-width: 120px; }      /* por si el archivo varía */

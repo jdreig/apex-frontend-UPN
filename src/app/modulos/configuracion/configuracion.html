@@ -1,0 +1,104 @@
+<div class="form-container" [attr.aria-busy]="loading ? 'true' : 'false'">
+  <div class="emp-head">
+    <!-- <img src="assets/img/logo.png" class="emp-logo animated-logo" alt="Apex"> -->
+    <h2 class="form-title">Mi propios datos</h2>
+  </div>
+
+  <!-- mensajes -->
+  <div *ngIf="errorMsg" class="alert err" role="alert">{{ errorMsg }}</div>
+  <div *ngIf="successMsg" class="alert alert-success" role="status">{{ successMsg }}</div>
+
+  <!-- Importante: abrirConfirmacion para Enter o submit -->
+  <form [formGroup]="form" (ngSubmit)="abrirConfirmacion()" class="ticket-form">
+    <!-- Usuario -->
+    <div class="form-group">
+      <label for="nombreusuario">Usuario <span class="required">*</span></label>
+      <input id="nombreusuario" type="text" formControlName="nombreusuario" placeholder="Nombre de usuario" autocomplete="username">
+      <div class="invalid" *ngIf="form.get('nombreusuario')?.touched && form.get('nombreusuario')?.invalid">
+        Ingresa un usuario válido (mín. 3 caracteres)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nombres">Nombres <span class="required">*</span></label>
+      <input id="nombres" type="text" formControlName="nombres" placeholder="Nombres" autocomplete="given-name">
+      <div class="invalid" *ngIf="form.get('nombres')?.touched && form.get('nombres')?.invalid">Campo obligatorio</div>
+    </div>
+
+    <div class="form-group">
+      <label for="apellidos">Apellidos <span class="required">*</span></label>
+      <input id="apellidos" type="text" formControlName="apellidos" placeholder="Apellidos" autocomplete="family-name">
+      <div class="invalid" *ngIf="form.get('apellidos')?.touched && form.get('apellidos')?.invalid">Campo obligatorio</div>
+    </div>
+
+    <div class="form-group">
+      <label for="correo">Correo <span class="required">*</span></label>
+      <input id="correo" type="email" formControlName="correo" placeholder="correo@dominio.com" autocomplete="email">
+      <div class="invalid" *ngIf="form.get('correo')?.touched && form.get('correo')?.invalid">Correo inválido</div>
+    </div>
+
+    <div class="form-group">
+      <label for="documento">Documento <span class="required">*</span></label>
+      <input id="documento" type="text" formControlName="documento" placeholder="DNI / CE / Pasaporte" maxlength="20" autocomplete="off">
+      <div class="invalid" *ngIf="form.get('documento')?.touched && form.get('documento')?.invalid">
+        Documento requerido (máx. 20)
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="celular">Celular</label>
+      <input id="celular" type="text" formControlName="celular" placeholder="Celular" maxlength="20" autocomplete="tel">
+    </div>
+
+    <!-- Estado oculto mientras el backend lo requiere -->
+    <input type="hidden" formControlName="estado" />
+
+    <!-- Contraseña (opcional) -->
+    <fieldset class="form-group" style="border:1px dashed #d1d5db; border-radius:10px; padding:12px;">
+      <legend style="font-weight:700; padding:0 6px;">Cambiar contraseña (opcional)</legend>
+
+      <div [formGroup]="passForm" class="ticket-form">
+        <div class="form-group">
+          <label for="contrasena">Nueva contraseña</label>
+          <input id="contrasena" type="password" formControlName="contrasena" placeholder="Mínimo 6 caracteres" autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label for="contrasena2">Confirmar contraseña</label>
+          <input id="contrasena2" type="password" formControlName="contrasena2" placeholder="Repite la contraseña" autocomplete="new-password">
+          <div class="invalid" *ngIf="passForm.get('contrasena2')?.touched && passForm.get('contrasena2')?.hasError('mismatch')">
+            Las contraseñas no coinciden
+          </div>
+        </div>
+      </div>
+
+      <small class="hint">Si dejas ambos campos vacíos, tu contraseña no cambiará.</small>
+    </fieldset>
+
+    <div class="form-actions">
+      <!-- Botón principal: abre el modal (no envía aún) -->
+      <button type="button" class="btn-submit" (click)="abrirConfirmacion()" [disabled]="guardando">
+        {{ guardando ? 'Guardando…' : 'Guardar cambios' }}
+      </button>
+      <!-- opcional: cancelar navegación
+      <button type="button" class="btn-cancel" (click)="router.navigate(['/principal'])">
+        Cancelar
+      </button> -->
+    </div>
+  </form>
+</div>
+
+<!-- ===== Modal de confirmación ===== -->
+<div class="modal-overlay" *ngIf="showConfirm">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="confTitle" aria-describedby="confText">
+    <h2 id="confTitle">Confirmar guardado</h2>
+    <p id="confText">{{ confirmMsg }}</p>
+
+    <div class="modal-actions">
+      <button type="button" class="btn-cancel" (click)="cancelarConfirmacion()">Cancelar</button>
+      <button type="button" class="btn-submit" (click)="confirmarGuardado()" [disabled]="guardando">
+        Confirmar
+      </button>
+    </div>
+  </div>
+</div>

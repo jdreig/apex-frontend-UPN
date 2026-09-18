@@ -1,0 +1,437 @@
+/* Layout general */
+.emp-list {
+  padding: 96px 20px 28px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.emp-list .head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.emp-list .head h2 {
+  margin: 0;
+  font-weight: 800;
+  color: var(--text-light);
+}
+
+/* === Tema claro para la tarjeta (sobre fondo oscuro) === */
+.emp-theme-light {
+  --emp-panel-bg: #f7fafc;          /* base clara */
+  --emp-panel-head: #eef3f7;        /* header tabla */
+  --emp-row-odd: #ffffff;
+  --emp-row-even: #f6f9fc;
+  --emp-row-hover: #eaf2fb;
+  --emp-border: #dfe8f2;
+  --emp-text: #0f172a;              /* texto oscuro legible */
+  --emp-muted: #64748b;
+}
+
+.emp-card{
+  box-sizing: border-box;             /* evita que el padding reduzca el ancho útil */
+  width: 100%;                        /* ocupa todo el ancho disponible */
+  max-width: none;                    /* quita límites si algún estilo global impone max-width */
+  background: var(--emp-panel-bg, #fff);
+  border: 1px solid var(--emp-border, #e5e7eb);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(2, 8, 23, .18);
+  padding: 16px 16px 12px;
+}
+
+/* Si el layout padre usa un contenedor central con max-width,
+   dale una clase para romper ese límite cuando la tabla lo requiera */
+.emp-card.emp-card--fluid{
+  max-width: 100%;
+}
+/* Filtros encima de la tabla */
+.emp-card .filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+}
+.emp-card .filters input {
+  flex: 1 1 220px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--emp-border);
+  background: #fff;
+  color: var(--emp-text);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.emp-card .filters input::placeholder {
+  color: #8aa0b6;
+}
+.emp-card .filters input:focus {
+  outline: none;
+  border-color: #7cc7dd;          /* acorde a la marca Apex */
+  box-shadow: 0 0 0 .18rem rgba(124,199,221,.25);
+}
+
+/* Botón “Limpiar” que contraste con el panel claro */
+.emp-card .btn-ghost {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--emp-border);
+  background: #fff;
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.emp-card .btn-ghost:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(2, 8, 23, .10);
+}
+.emp-card .btn-ghost:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+/* Botón “Nueva” (usa tu gradiente de marca) */
+.btn-primary {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--btn-gradient-start), var(--btn-gradient-end));
+  color: var(--text-dark);
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 18px rgba(56,230,176,.28);
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(56,230,176,.34);
+}
+
+/* Tabla clara y amable */
+.table-wrap {
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid var(--emp-border);
+}
+.table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 880px;
+  font-size: .95rem;
+  color: var(--emp-text);
+}
+.table-wrap thead th {
+  position: sticky;
+  top: 0;
+  background: var(--emp-panel-head);
+  color: #0f172a;
+  text-align: left;
+  padding: .75rem;
+  border-bottom: 1px solid var(--emp-border);
+  z-index: 1;
+}
+.table-wrap td {
+  padding: .7rem .75rem;
+  border-bottom: 1px solid var(--emp-border);
+}
+.table-wrap tbody tr:nth-child(odd) {
+  background: var(--emp-row-odd);
+}
+.table-wrap tbody tr:nth-child(even) {
+  background: var(--emp-row-even);
+}
+.table-wrap tbody tr:hover {
+  background: var(--emp-row-hover);
+}
+
+/* Columnas y celdas */
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.strong {
+  font-weight: 700;
+  color: #0b1324;
+}
+.empty {
+  text-align: center;
+  color: var(--emp-muted);
+  padding: 1rem 0;
+}
+
+/* Acciones por fila */
+.actions-col {
+  display: flex;
+  gap: 8px;
+}
+/*botones*/
+.btn-mini {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--emp-border);
+  background: #fff;
+  color: #0f172a;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.btn-mini:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(2, 8, 23, .10);
+}
+.btn-mini.danger {
+  color: #b42318;
+  border-color: #ffd1ce;
+  background: #fff5f4;
+}
+.btn-mini.danger:hover {
+  border-color: #f9b5b0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .emp-card {
+    padding: 12px;
+  }
+  .table-wrap table {
+    font-size: .9rem;
+    min-width: 100%;
+  }
+  .btn-mini {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* separador flexible a la derecha de filtros */
+.filters .spacer {
+  flex: 1 1 auto;
+}
+
+/* selector de tamaño de página */
+.page-size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  border: 1px solid var(--emp-border);
+  padding: 6px 10px;
+  border-radius: 12px;
+  height: 40px;
+}
+.page-size label {
+  color: #0f172a;
+  font-weight: 700;
+}
+.page-size select {
+  border: 1px solid var(--emp-border);
+  border-radius: 8px;
+  padding: 4px 8px;
+  background: #fff;
+  color: #0f172a;
+}
+.page-size .muted {
+  color: #6b7a8c;
+}
+
+/* paginador */
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 6px 4px;
+  color: #6b7a8c;
+}
+.pager button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--emp-border);
+  background: #fff;
+  color: #0f172a;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.pager button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(2, 8, 23, .10);
+  border-color: #7cc7dd;
+}
+.pager button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+/* Contenedor de la tabla con scroll horizontal */
+.table-wrap {
+  overflow-x: auto;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--emp-border);
+  box-shadow: 0 10px 24px rgba(2, 8, 23, .18);
+}
+
+/* Tabla fluida */
+.table-wrap table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: .95rem;
+  color: var(--emp-text);
+}
+
+/* Encabezado */
+.table-wrap thead th {
+  position: sticky;
+  top: 0;
+  background: var(--emp-panel-head);
+  color: #0f172a;
+  text-align: left;
+  padding: .75rem;
+  border-bottom: 1px solid var(--emp-border);
+  z-index: 1;
+}
+
+/* Celdas */
+.table-wrap td {
+  padding: .7rem .75rem;
+  border-bottom: 1px solid var(--emp-border);
+  word-break: break-word; /* evita que el contenido largo comprima la tabla */
+}
+
+/* Zebra y hover */
+.table-wrap tbody tr:nth-child(odd) {
+  background: var(--emp-row-odd);
+}
+.table-wrap tbody tr:nth-child(even) {
+  background: var(--emp-row-even);
+}
+.table-wrap tbody tr:hover {
+  background: var(--emp-row-hover);
+}
+
+/* Responsive general */
+@media (max-width: 992px) {
+  .table-wrap table {
+    font-size: .9rem;
+  }
+}
+
+/* Para pantallas muy pequeñas: scroll horizontal */
+@media (max-width: 768px) {
+  .table-wrap {
+    overflow-x: auto;
+  }
+  .table-wrap table {
+    min-width: 600px; /* asegura que las columnas no se compriman demasiado */
+  }
+}
+
+/* Inputs y selects dentro de filtros */
+.emp-card .filters input,
+.emp-card .filters select {
+  flex: 1 1 auto;
+  min-width: 100px;
+  max-width: 100%;
+}
+
+/* Acciones por fila flexibles */
+.actions-col {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap; /* permite que los botones se reorganicen en pantallas pequeñas */
+}
+.emp-card .table-wrap{
+  overflow-x: auto;        /* importante para tablas anchas */
+}
+.emp-card .table-wrap table{
+  min-width: 1200px;       /* sube este valor si necesitas más ancho */
+  table-layout: auto;
+}
+/* ================== Confirmar (Eliminar) ================== */
+.btn-confirm{
+  /* tokens */
+  --c-start: #ef4444;   /* rojo 500 */
+  --c-end:   #dc2626;   /* rojo 600 */
+  --c-fg:    #ffffff;
+  --ring:    rgba(239, 68, 68, .35);
+  --glow:    rgba(239, 68, 68, .40);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--c-start), var(--c-end));
+  color: var(--c-fg);
+  font-weight: 800;
+  font-size: .95rem;
+  letter-spacing: .2px;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+
+  box-shadow:
+    0 10px 22px var(--glow),
+    inset 0 1px 0 rgba(255,255,255,.15);
+  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  will-change: transform, box-shadow;
+}
+
+/* brillo suave arriba */
+.btn-confirm::after{
+  content:"";
+  position:absolute; inset:0;
+  border-radius:12px;
+  background: linear-gradient(to bottom, rgba(255,255,255,.22), rgba(255,255,255,0) 40%);
+  pointer-events:none; mix-blend-mode: soft-light;
+}
+
+.btn-confirm:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px var(--glow), inset 0 1px 0 rgba(255,255,255,.18);
+  filter: saturate(1.03);
+}
+.btn-confirm:active{
+  transform: translateY(0);
+  box-shadow: 0 8px 18px var(--glow), inset 0 2px 6px rgba(0,0,0,.18);
+}
+
+.btn-confirm:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 .18rem var(--ring),
+    0 10px 22px var(--glow);
+}
+
+/* Deshabilitado */
+.btn-confirm:disabled,
+.btn-confirm[aria-disabled="true"]{
+  opacity:.55; cursor:not-allowed; transform:none; box-shadow:none;
+}
+
+/* Con ícono */
+.btn-confirm .icon{
+  width: 1.1em; height: 1.1em; display:inline-block; flex:0 0 auto;
+}
+
+/* Tamaños */
+.btn-confirm.sm{ padding:8px 12px; font-size:.88rem; border-radius:10px; }
+.btn-confirm.lg{ padding:12px 18px; font-size:1rem;  border-radius:14px; }
+
+/* Variante outline (menos agresivo visual) */
+.btn-confirm.outline{
+  background: transparent;
+  color: #b91c1c; /* rojo 700 */
+  border: 2px solid transparent;
+  box-shadow: none;
+  background-image:
+    linear-gradient(#fff, #fff),
+    linear-gradient(135deg, var(--c-start), var(--c-end));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+.btn-confirm.outline:hover{ box-shadow: 0 8px 18px var(--glow); }

@@ -1,0 +1,78 @@
+<div class="form-container shadow">
+  <header class="emp-head">
+    <img src="/assets/img/login/logo.png" alt="Apex" class="emp-logo" />
+    <h2 class="form-title">Registre su nueva empresa</h2>
+  </header>
+<form #f="ngForm" (ngSubmit)="guardar(f)" class="ticket-form" novalidate>
+
+    <!-- RUC -->
+    <div class="form-group">
+      <label for="ruc">RUC <span class="required">*</span></label>
+      <input id="ruc" name="ruc" [(ngModel)]="form.ruc" required pattern="[0-9]{11}" placeholder="Ej. 20123456789" />
+      <div class="invalid" *ngIf="f.submitted && !form.ruc">El RUC es obligatorio.</div>
+      <div class="invalid" *ngIf="f.submitted && rucInvalido">
+        El RUC debe contener 11 dígitos numéricos.
+      </div>
+    </div>
+
+    <!-- Razón social -->
+    <div class="form-group">
+      <label for="razonsocial">Razón Social <span class="required">*</span></label>
+      <input id="razonsocial" name="razonsocial" [(ngModel)]="form.razonsocial" required
+        placeholder="Ej. Mi Empresa S.A." />
+      <div class="invalid" *ngIf="f.submitted && !form.razonsocial">La razón social es obligatoria.</div>
+    </div>
+
+    <!-- Dirección -->
+    <div class="form-group">
+      <label for="direccion">Dirección <span class="required">*</span></label>
+      <input id="direccion" name="direccion" [(ngModel)]="form.direccion" required
+        placeholder="Ej. Av. Principal 123" />
+      <div class="invalid" *ngIf="f.submitted && !form.direccion">La dirección es obligatoria.</div>
+    </div>
+
+    <!-- Correo -->
+    <div class="form-group">
+      <label for="correo">Correo <span class="required">*</span></label>
+      <input id="correo" name="correo" type="email" [(ngModel)]="form.correo" required #correo="ngModel"
+        placeholder="Ej. correo@empresa.com" />
+      <div class="invalid" *ngIf="f.submitted && !form.correo">El correo es obligatorio.</div>
+      <div class="invalid" *ngIf="f.submitted && form.correo && correo.invalid">
+        Ingresa un correo válido.
+      </div>
+    </div>
+
+    <!-- Teléfono -->
+    <div class="form-group">
+      <label for="telefono">Teléfono <span class="required">*</span></label>
+      <input id="telefono" name="telefono" [(ngModel)]="form.telefono" #telefono="ngModel" required
+        placeholder="Ej. 987654321" />
+      <div class="invalid" *ngIf="f.submitted && (telefono.invalid || telefonoInvalido)">
+        <span *ngIf="telefono.errors?.['required']">El teléfono es obligatorio.</span>
+        <span *ngIf="telefonoInvalido">El teléfono debe tener entre 6 y 15 dígitos.</span>
+      </div>
+    </div>
+
+    <!-- Botones centrados -->
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="irLista()">Cancelar</button>
+      <button type="submit" class="btn-submit">Guardar</button>
+    </div>
+
+    <!-- Error general -->
+    <div *ngIf="error" class="alert err">
+      <i class="bi bi-exclamation-triangle-fill"></i> {{ error }}
+    </div>
+  </form>
+</div>
+
+<!-- Modal de confirmación -->
+<div class="modal-overlay" *ngIf="mostrarConfirmacion" (click)="cerrarConfirmacion()">
+  <div class="modal-card shadow" (click)="$event.stopPropagation()">
+    <h2>{{ CabeceraMensaje }}</h2>
+    <p>{{ mensajeConfirmacion }}</p>
+    <div class="modal-actions">
+      <button class="btn-submit" (click)="cerrarConfirmacion()">Aceptar</button>
+    </div>
+  </div>
+</div>

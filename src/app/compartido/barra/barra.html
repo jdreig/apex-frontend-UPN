@@ -1,0 +1,37 @@
+
+<nav class="navbar">
+  <div class="navbar-brand">
+    <img src="/assets/img/login/logo.png" alt="Apex Logo" class="app-logo" />
+    <span class="navbar-title">APEX América BPO</span>
+  </div>
+
+  <div class="navbar-user">
+    Bienvenido: {{ nombres }} {{ apellidos }}
+  </div>
+
+  <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+
+  <div class="navbar-options" [class.open]="menuOpen">
+    <a href="#" class="btn-logout" (click)="abrirConfirmacion($event)">
+      Cerrar sesión
+    </a>
+  </div>
+</nav>
+
+  <!-- Modal de confirmación -->
+  @if (mostrarConfirmacion) {
+  <div class="modal-overlay">
+    <div class="modal-card shadow">
+      <h2>¿Cerrar sesión?</h2>
+      <p>
+        Tu sesión actual se cerrará y volverás a la pantalla de inicio de sesión.
+      </p>
+      <div class="modal-actions">
+        <button class="btn-cancel" (click)="cerrarConfirmacion()">Cancelar</button>
+        <button class="btn-confirm" (click)="confirmarLogout()">
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </div>
+  }

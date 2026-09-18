@@ -1,0 +1,108 @@
+<app-barra></app-barra>
+
+<div class="ticket-container theme-mist">
+  <div class="lt-header">
+    <h2>Mis tickets</h2>
+    <span class="lt-count">{{ ticketsFiltrados.length }} resultado{{ ticketsFiltrados.length === 1 ? '' : 's' }}</span>
+  </div>
+
+  <div class="filter-bar">
+    <input type="text" placeholder="Buscar por título, usuario, empresa…" [(ngModel)]="filtroTexto" />
+
+    <select [(ngModel)]="filtroEstado">
+      <option value="">Todos los estados</option>
+      <option>Abierto</option>
+      <option>En proceso</option>
+      <option>Atendido</option>
+      <option>Cerrado</option>
+      <option>Reabierto</option>
+    </select>
+
+    <select [(ngModel)]="filtroCategoria">
+      <option value="">Todas las categorías</option>
+      <option *ngFor="let c of categoriasUnicas" [value]="c">{{ c }}</option>
+    </select>
+
+    <select [(ngModel)]="filtroPrioridad">
+      <option value="">Todas las prioridades</option>
+      <option>Critico</option>
+      <option>Alta</option>
+      <option>Media</option>
+      <option>Baja</option>
+    </select>
+
+    <button class="btn-clear" (click)="limpiarFiltros()" [disabled]="!hayFiltrosActivos()">Limpiar</button>
+  </div>
+
+  <div *ngIf="vista === 'lista'" class="ticket-list">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Acción</th>
+            <th>Título</th>
+            <th>Categoría</th>
+            <th>Prioridad</th>
+            <th>Estado de Solicitud</th>
+            <th>Registrado por</th>
+            <th>Empresa</th>
+            <th>Fecha de creación</th>
+            <th>Ultimo cambio de estado</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let ticket of ticketsPaginados; trackBy: trackById">
+            <td><button class="btn-ver"  (click)="verDetalle(ticket)">Ver detalle</button></td>
+            <td class="td-title">{{ ticket.titulo }}</td>
+            <td>{{ ticket.categoria }}</td>
+            <td><span class="badge prio" [ngClass]="prioridadClase(ticket.prioridad)">{{ ticket.prioridad }}</span></td>
+
+            <td>
+              <div class="estado-badge-wrapper">
+                <span class="estado-badge" [ngClass]="estadoClase(ticket.estadoDesc)" (click)="toggleDropdown(ticket)">
+                  {{ ticket.estadoDesc }}
+                </span>
+
+                <div class="estado-dropdown" *ngIf="ticket.showDropdown">
+                  <div *ngFor="let e of listaEstados" (click)="cambiarEstado(ticket, e)"
+                    [ngClass]="estadoClase(e.descripcion)">
+                    {{ e.descripcion }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>{{ ticket.registradoPor }}</td>
+            <td>{{ ticket.empresa }}</td>
+
+            <!-- Fecha creación -->
+            <td>
+              <ng-container *ngIf="asDate(ticket.fechaCreacionISO) as dc; else fcFmt">
+                {{ dc | date:'dd/MM/yyyy HH:mm' }}
+              </ng-container>
+              <ng-template #fcFmt>{{ ticket.fechaCreacionFmt || '—' }}</ng-template>
+            </td>
+
+            <!-- Fecha actualización -->
+            <td>
+              <ng-container *ngIf="asDate(ticket.fechaActualizacionISO) as du; else fuFmt">
+                {{ du | date:'dd/MM/yyyy HH:mm' }}
+              </ng-container>
+              <ng-template #fuFmt>{{ ticket.fechaActualizacionFmt || '—' }}</ng-template>
+            </td>
+          </tr>
+
+          <tr *ngIf="ticketsPaginados.length === 0">
+            <td colspan="9" class="empty">No hay tickets que coincidan con tus filtros.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" *ngIf="totalPaginas > 1">
+      <button (click)="paginaAnterior()" [disabled]="pagina === 1">Anterior</button>
+      <span>Página {{ pagina }} / {{ totalPaginas }}</span>
+      <button (click)="paginaSiguiente()" [disabled]="pagina === totalPaginas">Siguiente</button>
+    </div>
+  </div>
+</div>

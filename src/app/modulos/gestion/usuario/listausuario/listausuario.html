@@ -1,0 +1,86 @@
+<app-barra></app-barra>
+
+<div class="emp-list emp-theme-light">
+  <div class="head">
+    <h2>Usuarios</h2>
+    <div class="actions">
+      <button class="btn-primary" (click)="irCrear()">
+        <i class="fas fa-plus"></i> Nuevo usuario
+      </button>
+    </div>
+  </div>
+
+  <div class="emp-card">
+    <div class="filters">
+      <input type="text" [(ngModel)]="filtro" placeholder="Buscar por usuario, nombre, correo, rol, empresa…" />
+      <button class="btn-ghost" (click)="limpiar()" [disabled]="!filtro">Limpiar</button>
+      <div class="spacer"></div>
+      <div class="page-size">
+        <label>Mostrar</label>
+        <select [(ngModel)]="pageSize" (ngModelChange)="setPageSize($event)">
+          <option *ngFor="let n of pageSizeOptions" [ngValue]="n">{{ n }}</option>
+        </select>
+        <span class="muted">de {{ filtrados.length }}</span>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Documento</th>
+            <th>Celular</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Empresa</th>
+            <th style="width: 140px;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of paginados">
+            <td class="strong">{{ u.nombreusuario }}</td>
+            <td class="mono">{{ u.nombres }}</td>
+            <td>{{ u.apellidos }}</td>
+            <td class="mono">{{ u.documento }}</td>
+            <td class="mono">{{ u.celular }}</td>
+            <td>{{ u.correo }}</td>
+            <td>{{ u.rol }}</td>
+            <td>{{ u.empresa }}</td>
+            <td class="actions-col">
+              <button class="btn-mini" (click)="irEditar(u)" title="Editar">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn-mini danger" (click)="confirmarEliminar(u)" title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="paginados.length === 0">
+            <td colspan="9" class="empty">Sin resultados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pager">
+      <button (click)="prev()" [disabled]="page === 1">Anterior</button>
+      <span>Página {{ page }} / {{ totalPages }}</span>
+      <button (click)="next()" [disabled]="page === totalPages">Siguiente</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación tipo Crear Ticket -->
+<div class="modal-overlay" *ngIf="mostrarConfirmacion" (click)="cerrarConfirmacion()">
+  <div class="modal-card shadow" (click)="$event.stopPropagation()">
+    <h2>{{ cabeceraMensaje }}</h2>
+    <p>{{ mensajeConfirmacion }}</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cerrarConfirmacion()">Cancelar</button>
+      <button class="btn-confirm" (click)="ejecutarConfirmacion()">Aceptar</button>
+    </div>
+  </div>
+</div>

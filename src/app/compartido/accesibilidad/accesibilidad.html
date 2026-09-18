@@ -1,0 +1,32 @@
+<div class="fab-container" aria-label="Accesibilidad">
+  <!-- Volver (oculto en login/principal) -->
+  <button class="fab-btn fab-back" *ngIf="showBack" (click)="goBack()" aria-label="Volver">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span class="tooltip-fab" role="tooltip">Volver</span>
+  </button>
+
+  <button class="fab-btn fab-mic" (click)="startDictation()" aria-label="Dictado por voz">
+    <i class="fas fa-microphone" aria-hidden="true"></i>
+    <span class="tooltip-fab">Dictado por voz</span>
+  </button>
+
+  <button class="fab-btn fab-speaker" (click)="readPage()" aria-label="Escuchar guía">
+    <i class="fas fa-volume-up" aria-hidden="true"></i>
+    <span class="tooltip-fab">Escuchar guía</span>
+  </button>
+
+  <button class="fab-btn fab-access" (click)="toggleFontSize()" aria-label="Tamaño de texto">
+    <i class="fas fa-universal-access" aria-hidden="true"></i>
+    <span class="tooltip-fab">Tamaño de texto</span>
+  </button>
+
+  <button class="fab-btn fab-dark" (click)="toggleDarkMode()" aria-label="Modo oscuro">
+    <i class="fas fa-moon" aria-hidden="true"></i>
+    <span class="tooltip-fab">Modo oscuro</span>
+  </button>
+
+  <button class="fab-btn fab-large" (click)="resetAccesibilidad()" aria-label="Restablecer accesibilidad">
+    <i class="fas fa-sync-alt" aria-hidden="true"></i>
+    <span class="tooltip-fab">Restablecer</span>
+  </button>
+</div>

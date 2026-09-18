@@ -1,0 +1,614 @@
+/* Contenedor principal */
+.container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Estilos del logo */
+.logo-box {
+  background-color: #f1f1f1;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.emp-logo {
+  max-width: 80%;
+  height: auto;
+}
+
+h2 {
+  color: #333;
+  font-size: 28px;
+  font-weight: 700;
+  margin-top: 15px;
+}
+
+.emp-sub {
+  font-size: 16px;
+  color: #666;
+}
+
+/* Detalles del cliente */
+.card {
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.bg-light-gray {
+  background-color: #f9f9f9 !important;
+}
+
+/* Chatbox */
+.chat-box {
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  padding: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.chat-message {
+  margin-bottom: 15px;
+}
+
+.chat-bubble {
+  max-width: 70%;
+  display: inline-block;
+  word-wrap: break-word;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* Estilo para el fondo de la burbuja según el autor */
+.bg-light {
+  background-color: #e1e1e1 !important;
+}
+
+.bg-primary {
+  background-color: #007bff !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.text-dark {
+  color: #333 !important;
+}
+
+.text-light {
+  color: #f1f1f1 !important;
+}
+
+/* Efectos de hover */
+.bg-light:hover, .bg-primary:hover {
+  background-color: #ddd !important;
+  transform: scale(1.05);
+}
+
+/* Formulario de respuesta */
+.input-group {
+  margin-top: 20px;
+}
+/* Campos de formulario modernos y animados */
+.form-control {
+  width: 100%;
+  padding: 15px 18px;
+  font-size: 16px;
+  border-radius: 25px;
+  border: 2px solid rgba(230, 81, 0, 0.3); /* borde cálido suave */
+  background-color: #fffaf5; /* fondo muy claro cálido */
+  color: #333;
+  box-shadow: 0 4px 10px rgba(230, 81, 0, 0.1); /* sombra cálida ligera */
+  transition: all 0.3s ease-in-out;
+  outline: none;
+  position: relative;
+}
+
+/* Hover: resalta el borde y levanta ligeramente */
+.form-control:hover {
+  border-color: #E65100;
+  box-shadow: 0 6px 14px rgba(230, 81, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Focus: borde más brillante y animación de glow cálido */
+.form-control:focus {
+  border-color: #FF8F45; /* naranja más brillante */
+  box-shadow: 0 0 0 0.2rem rgba(230, 81, 0, 0.25), 0 6px 20px rgba(230, 81, 0, 0.2);
+  animation: pulseGlow 1.2s ease-in-out infinite alternate;
+}
+
+/* Animación de glow sutil */
+@keyframes pulseGlow {
+  0% {
+    box-shadow: 0 0 0 0.1rem rgba(230, 81, 0, 0.15), 0 6px 20px rgba(230, 81, 0, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0.25rem rgba(230, 81, 0, 0.25), 0 6px 20px rgba(230, 81, 0, 0.25);
+  }
+}
+
+/* Placeholder cálido y visible */
+.form-control::placeholder {
+  color: rgba(230, 81, 0, 0.5);
+  font-style: italic;
+}
+
+/* Para suavizar autofill en navegadores */
+input:-webkit-autofill {
+  -webkit-text-fill-color: #333;
+  -webkit-box-shadow: 0 0 0px 1000px #fffaf5 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.btn-primary {
+  border-radius: 25px;
+  padding: 12px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.fas.fa-paper-plane {
+  margin-right: 5px;
+}
+
+/* Respuestas */
+.respuesta-text {
+  color: #333;
+  font-size: 15px;
+  font-family: 'Arial', sans-serif;
+  font-weight: normal;
+}
+
+/* Animación de aparición */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animaciones de las respuestas */
+.animate__animated {
+  animation-duration: 0.5s;
+  animation-delay: 0s;
+}
+
+.animate__fadeInUp {
+  animation-name: fadeInUp;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+
+/* Estilos del Log de Apex */
+.log-section {
+  margin-top: 40px;
+}
+
+.log-box {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  color: #333;
+  white-space: pre-wrap;
+  overflow: auto;
+  max-height: 200px;
+  border: 1px solid #ddd;
+}
+/* Logo */
+.logo-box {
+  background-color: #f1f1f1;
+  padding: 25px;
+  border-radius: 15px;
+  max-width: 100%;
+  margin: 0 auto 20px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.emp-logo {
+  max-width: 100px;
+  height: auto;
+}
+
+/* Contenedor de chat moderno */
+.chat-box {
+  background-color: #fff4ee; /* fondo cálido */
+  border-radius: 20px;
+  padding: 20px;
+  max-height: 450px;
+  overflow-y: auto;
+  box-shadow: 0 6px 18px rgba(230, 81, 0, 0.15);
+  transition: background 0.3s ease;
+}
+
+/* Mensajes individuales */
+.chat-message {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Burbuja de mensaje */
+.chat-bubble {
+  max-width: 75%;
+  padding: 15px 18px;
+  border-radius: 20px;
+  word-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.5;
+  position: relative;
+  transition: all 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.1);
+}
+
+/* Mensajes del usuario */
+.chat-bubble.bg-light {
+  background-color: #ffe8d6; /* cálido, fondo claro para el usuario */
+  color: #333;
+  align-self: flex-end;
+}
+
+/* Mensajes del agente */
+.chat-bubble.bg-primary {
+  background-color: #ff7043; /* cálido, naranja suave para el agente */
+  color: #fff;
+  align-self: flex-start;
+}
+
+/* Animación hover tipo “levitar” */
+.chat-bubble:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 18px rgba(230, 81, 0, 0.25);
+}
+
+/* Texto dentro de la burbuja */
+.chat-bubble .text-white { color: #fff; }
+.chat-bubble .text-dark { color: #333; }
+.chat-bubble .text-light { color: #f1f1f1; }
+
+/* Hora del mensaje */
+.chat-time {
+  font-size: 12px;
+  color: #b45c39; /* cálido oscuro */
+  margin-left: 5px;
+  font-weight: 500;
+}
+
+/* Animación de aparición */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Sutil animación tipo pulso en burbujas nuevas */
+.chat-bubble.new {
+  animation: pulseBubble 1s ease-out;
+}
+
+@keyframes pulseBubble {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Scroll bonito */
+.chat-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background: #ffe8d6;
+  border-radius: 8px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background: #ff7043;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+  background: #e65100;
+}
+
+/* Formulario */
+textarea.form-control {
+  border-radius: 20px;
+  font-size: 16px;
+}
+
+/* Botón enviar */
+.btn-primary {
+  border-radius: 25px;
+  font-size: 16px;
+  padding: 10px 20px;
+}
+
+
+/* Animaciones */
+.animate__fadeInUp {
+  animation-name: fadeInUp;
+  animation-duration: 0.5s;
+}
+@keyframes fadeInUp {
+  from { opacity:0; transform: translateY(20px); }
+  to { opacity:1; transform: translateY(0); }
+}
+
+/* Filtros */
+.filters input {
+  flex: 1;
+}
+/* Cuadro compacto y legible para detalles del cliente */
+.cliente-card {
+  max-height: auto; /* Altura flexible para que se vean todos los campos */
+  padding: 15px 20px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  display: flex;
+  flex-wrap: wrap; /* Permite que los campos se acomoden en varias filas */
+  gap: 15px; /* Espacio entre cada campo */
+}
+
+/* Cada par label-valor con animación de entrada */
+.cliente-field {
+  flex: 1 1 45%;
+  min-width: 150px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(230, 81, 0, 0.05); /* fondo cálido suave */
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeInSlide 0.5s ease forwards;
+}
+
+/* Hover con efecto cálido */
+.cliente-field:hover {
+  background: rgba(230, 81, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 81, 0, 0.3);
+}
+
+/* Animación de entrada */
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilo del label (strong) */
+.cliente-field strong {
+  margin-right: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #E65100; /* naranja cálido fijo */
+  transition: all 0.3s ease;
+}
+
+/* Valor del cliente */
+.cliente-text {
+  color: #E65100; /* mismo naranja cálido */
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+/* Hover para animar ligeramente el color del valor */
+.cliente-field:hover .cliente-text {
+  color: #FF8F45; /* naranja más claro al pasar mouse */
+}
+
+
+
+/* Filtros discretos */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.filters input {
+  width: auto;
+  min-width: 120px;
+  padding: 4px 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+/* Formulario de respuesta con botones alineados */
+.mt-3.d-flex {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px; /* Espacio entre textarea y el botón */
+}
+
+textarea {
+  flex-grow: 1; /* Hace que el textarea ocupe todo el espacio disponible */
+}
+
+button {
+  max-width: 100px; /* Puedes ajustar el tamaño del botón */
+}
+.logo-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.emp-logo {
+  max-width: 60px; /* Ajusta el tamaño según prefieras */
+  height: auto;
+}
+
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(135deg, #d18e5d, #e0b687); /* tonos cálidos */
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(214,150,115,0.4);
+  transition: all 0.25s ease;
+}
+
+/* Animación de brillo */
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0.3), rgba(255,255,255,0));
+  transform: skewX(-25deg) translateX(0);
+  transition: all 0.5s ease;
+}
+
+.btn-primary:hover::before {
+  transform: skewX(-25deg) translateX(200%);
+}
+
+/* Hover: ligero movimiento y brillo */
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(214,150,115,0.5);
+  background: linear-gradient(135deg, #e0b687, #d18e5d);
+}
+
+.btn-primary:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 3px 12px rgba(214,150,115,0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.85;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #d1a77f, #e0c0a0);
+  box-shadow: none;
+}
+/* Cliente destacado con animación cálida */
+.cliente-text {
+  color: #e07b39; /* tono cálido (terracota/dorado suave) */
+  font-weight: 700;
+  font-size: 16px;
+  position: relative;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+/* Efecto de resplandor pulsante */
+.cliente-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+  box-shadow: 0 0 6px rgba(224,123,57,0.6), 0 0 12px rgba(224,123,57,0.4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Al pasar el mouse, el texto resplandece */
+.cliente-text:hover {
+  color: #ffad75;
+}
+
+.cliente-text:hover::after {
+  opacity: 1;
+  animation: pulseGlow 1.5s infinite alternate;
+}
+
+/* Animación de pulso */
+@keyframes pulseGlow {
+  from {
+    box-shadow: 0 0 6px rgba(224,123,57,0.6), 0 0 12px rgba(224,123,57,0.4);
+  }
+  to {
+    box-shadow: 0 0 12px rgba(224,123,57,0.8), 0 0 20px rgba(224,123,57,0.6);
+  }
+}

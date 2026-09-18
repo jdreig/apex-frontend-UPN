@@ -1,0 +1,68 @@
+<main class="fx-grid theme-apex">
+    <!-- Orbes y scanline -->
+    <div class="orb orb-1" aria-hidden="true"></div>
+    <div class="orb orb-2" aria-hidden="true"></div>
+    <div class="scanline" aria-hidden="true"></div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <img src="/assets/img/login/logo.png" alt="Logo de Apex" class="app-logo" />
+            <h1>Apex</h1>
+            <small>Gestión de Servicios Técnicos</small>
+        </div>
+
+        <form id="loginForm" (ngSubmit)="onLogin()" #loginFormAngular="ngForm"
+            [attr.aria-busy]="isLoading ? 'true' : 'false'" autocomplete="on" novalidate>
+            <!-- Usuario -->
+            <div class="form-group">
+                <label for="username" class="form-label">Usuario</label>
+                <div class="bi-field">
+                    <i class="bi bi-person" aria-hidden="true"></i>
+                    <input type="text" class="form-control bi-input" id="username" name="usuario" [(ngModel)]="usuario"
+                        required autocomplete="username" placeholder="Tu usuario" spellcheck="false"
+                        autocapitalize="none" />
+                </div>
+            </div>
+
+            <!-- Contraseña -->
+            <div class="form-group">
+                <label for="password" class="form-label">Contraseña</label>
+                <div class="bi-field">
+                    <i class="bi bi-lock" aria-hidden="true"></i>
+                    <input [type]="showPass ? 'text' : 'password'" class="form-control bi-input pr-44" id="password"
+                        name="contrasena" [(ngModel)]="contrasena" required autocomplete="current-password"
+                        placeholder="••••••••" spellcheck="false" autocapitalize="none" />
+                    <button type="button" class="toggle-pass" (click)="showPass = !showPass"
+                        [attr.aria-pressed]="showPass"
+                        [attr.aria-label]="showPass ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                        title="Mostrar/Ocultar contraseña">
+                        <i class="bi" [ngClass]="showPass ? 'bi-eye-slash' : 'bi-eye'" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Error -->
+            <div *ngIf="error" class="alert alert-danger py-2 mt-2" role="alert" aria-live="assertive">
+                <i class="bi bi-exclamation-triangle-fill me-1" aria-hidden="true"></i>
+                {{ mensajeError }}
+            </div>
+            <button type="submit" class="btn-main shine" id="btnLogin"
+                [disabled]="isSubmitting || loginFormAngular.invalid">
+                <ng-container *ngIf="!isSubmitting; else loadingTpl">
+                    <i class="bi bi-box-arrow-in-right me-1" aria-hidden="true"></i>
+                    Iniciar sesión
+                </ng-container>
+                <ng-template #loadingTpl>
+                    <span class="spinner" aria-hidden="true"></span>
+                    <span class="sr-only">Autenticando…</span>
+                </ng-template>
+            </button>
+        </form>
+
+        <div class="access-links">
+            <a [routerLink]="['/recover']" id="btnRecover">¿Olvidaste tu contraseña?</a>
+            <a [routerLink]="['/register']" id="btnRegister">Registrarse</a>
+        </div>
+    </div>
+    <app-loading *ngIf="isLoading"></app-loading>
+</main>

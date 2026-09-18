@@ -1,0 +1,84 @@
+
+<div class="form-container shadow">
+  <header class="emp-head">
+    <img src="/assets/img/login/logo.png" alt="Apex" class="emp-logo animated-logo" />
+    <h2 class="form-title animated-title">Genere su ticket de atención</h2>
+  </header>
+  <form (ngSubmit)="enviarFormulario()" #ticketForm="ngForm" class="ticket-form" novalidate>
+    <!-- Título -->
+    <div class="form-group">
+      <label for="titulo">Asunto <span class="required">*</span></label>
+      <input
+        id="titulo"
+        name="titulo"
+        type="text"
+        [(ngModel)]="ticket.titulo"
+        #titulo="ngModel"
+        required
+        placeholder="Ej. Equipo no enciende"
+        aria-required="true"
+      />
+      <div class="invalid" *ngIf="ticketForm.submitted && titulo.invalid">El asunto es obligatorio.</div>
+    </div>
+
+    <!-- Categoría -->
+    <div class="form-group">
+      <label for="categoria">Categoría <span class="required">*</span></label>
+      <select
+        id="categoria"
+        name="categoria"
+        [(ngModel)]="ticket.categoria"
+        #categoria="ngModel"
+        required
+        aria-required="true"
+      >
+        <option value="" disabled>Seleccione una categoría</option>
+        <option *ngFor="let cat of categorias" [value]="cat.idcategoria">{{ cat.descripcion }}</option>
+      </select>
+      <div class="invalid" *ngIf="ticketForm.submitted && categoria.invalid">Seleccione una categoría.</div>
+    </div>
+
+    <!-- Prioridad -->
+    <div class="form-group">
+      <label for="prioridad">Prioridad</label>
+      <select id="prioridad" name="prioridad" [(ngModel)]="ticket.prioridad">
+        <option *ngFor="let pri of prioridades" [value]="pri.codigo">{{ pri.descripcion }}</option>
+      </select>
+    </div>
+
+    <!-- Descripción -->
+    <div class="form-group">
+      <label for="descripcion">Descripción <span class="required">*</span></label>
+      <textarea
+        id="descripcion"
+        name="descripcion"
+        rows="5"
+        [(ngModel)]="ticket.descripcion"
+        #descripcion="ngModel"
+        required
+        placeholder="Describe el problema con el mayor detalle posible"
+      ></textarea>
+      <div class="invalid" *ngIf="ticketForm.submitted && descripcion.invalid">
+        La descripción es obligatoria.
+      </div>
+    </div>
+
+    <!-- Acciones -->
+    <div class="form-actions">
+      <button type="submit" class="btn-submit">
+        Crear Ticket
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal de confirmación (fuera del form) -->
+<div class="modal-overlay" *ngIf="mostrarConfirmacion" (click)="cerrarConfirmacion()">
+  <div class="modal-card shadow" (click)="$event.stopPropagation()">
+    <h2>{{ CabeceraMensaje }}</h2>
+    <p>{{ mensajeConfirmacion }}</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" (click)="cerrarConfirmacion()">Cerrar</button>
+    </div>
+  </div>
+</div>

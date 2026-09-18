@@ -1,0 +1,133 @@
+/* ===== Layout (deja espacio para navbar fija) ===== */
+main { padding: clamp(5rem, 6vw, 6rem) 1rem 2rem; display:flex; justify-content:center; }
+
+/* ===== Card contenedor ===== */
+.actions-container{
+  max-width: 980px;
+  width: 100%;
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  box-shadow: 0 10px 25px var(--shadow-color), 0 0 0 1px rgba(255,255,255,0.03) inset;
+  backdrop-filter: blur(8px);
+  transition: transform .25s ease;
+  text-align: center;
+}
+.actions-container:hover{ transform: translateY(-3px); }
+
+.actions-header{ margin-bottom: 1.25rem; }
+.actions-header h2{
+  margin: 0;
+  font-weight: 800;
+  color: var(--text-light);
+  font-size: clamp(1.25rem, 1.6vw + .8rem, 1.75rem);
+}
+
+/* ===== Grid de acciones ===== */
+.action-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1rem, 2.4vw, 1.5rem);
+  align-items: stretch;
+}
+
+/* ===== Tarjetas ===== */
+.action-card{
+  position: relative;
+  text-decoration: none;
+  background: #111827; /* tono gris oscuro para contraste */
+  color: var(--text-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  min-height: 160px;
+  display: grid;
+  place-items: center;
+  gap: .5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,.25);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  outline: none;
+}
+.action-card:hover{
+  transform: translateY(-4px);
+  border-color: var(--primary-color);
+  box-shadow: 0 10px 24px rgba(56,230,176,.22);
+}
+.action-card:active{ transform: translateY(0) scale(.995); }
+
+/* Accesibilidad: foco visible */
+.action-card:focus-visible{
+  box-shadow: 0 0 0 3px rgba(56,230,176,.35);
+  border-color: var(--primary-color);
+}
+
+/* Icono */
+.action-icon{ margin-bottom: .25rem; }
+.icon-img{
+  width: 48px; height: 48px; object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.3));
+}
+
+/* Título */
+.action-title{
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: .2px;
+  text-align: center;
+  color: var(--text-light);
+}
+
+/* Tooltip simple */
+.action-tooltip{
+  position: absolute;
+  left: 50%; bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  background: var(--input-bg);
+  color: var(--text-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: .85rem;
+  white-space: nowrap;
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  opacity: 0; visibility: hidden;
+  transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
+  pointer-events: none;
+}
+.action-card:hover .action-tooltip,
+.action-card:focus-visible .action-tooltip{
+  opacity: 1; visibility: visible;
+  transform: translateX(-50%) translateY(-2px);
+  transition: opacity .2s ease, transform .2s ease, visibility 0s;
+}
+
+/* Responsive */
+@media (max-width: 768px){
+  .actions-container{ padding: 1.25rem; }
+  .action-grid{ gap: 1rem; }
+}
+@media (max-width: 480px){
+  .action-card{ min-height: 140px; }
+  .icon-img{ width: 44px; height: 44px; }
+}
+/* Fuerza los íconos a blanco sobre fondo oscuro */
+.icon-img{
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  /* convierte iconos negros a blancos */
+  filter: brightness(0) invert(1) opacity(.9);
+  transition: filter .2s ease, transform .2s ease;
+}
+
+/* Resalta en hover con tu color primario */
+.action-card:hover .icon-img,
+.action-card:focus-visible .icon-img{
+  /* blanco + glow verdoso */
+  filter: brightness(0) invert(1) drop-shadow(0 0 10px rgba(56,230,176,.35));
+  transform: translateY(-1px) scale(1.03);
+}
+
+/* Si algún PNG es muy tenue, sube la opacidad base */

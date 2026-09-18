@@ -1,0 +1,24 @@
+<app-barra></app-barra>
+<main>
+  <div class="actions-container shadow" aria-label="Panel de acciones principales">
+    <div class="actions-header">
+      <h2>¿Qué acción deseas realizar?</h2>
+    </div>
+
+    <div class="action-grid">
+      <a
+        *ngFor="let action of actions"
+        [routerLink]="action.link"
+        class="action-card shadow"
+        tabindex="0"
+        [attr.aria-label]="'Ir a ' + action.name">
+        <div class="action-icon">
+          <img [src]="action.icon" [alt]="action.name" class="icon-img" />
+        </div>
+        <h3 class="action-title">{{ action.name }}</h3>
+        <span class="action-tooltip" role="tooltip">{{ action.name }}</span>
+      </a>
+    </div>
+  </div>
+</main>
+

@@ -1,0 +1,476 @@
+/* —— CONTENEDOR Y HEADER ————————————————————— */
+.ticket-container{
+  padding: 96px 20px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.lt-header{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:12px;
+}
+.lt-header h2{
+  margin:0; font-size:clamp(1.2rem,1.5vw + .8rem,1.6rem);
+  font-weight:800; color:var(--text-light);
+}
+.lt-count{ color:var(--text-secondary); font-size:.95rem; }
+
+/* —— FILTROS ———————————————————————————————— */
+.filter-bar{
+  display:flex; flex-wrap:wrap; gap:12px; margin-bottom:16px; padding:12px;
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:12px; backdrop-filter:blur(6px);
+  box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+.filter-bar input,.filter-bar select{
+  flex:1 1 220px; min-width:160px; max-width:320px;
+  padding:10px 12px; border:1px solid rgba(255,255,255,.10);
+  border-radius:10px; background:var(--input-bg); color:var(--text-light);
+}
+.filter-bar input::placeholder{ color:var(--text-secondary); }
+.filter-bar input:focus,.filter-bar select:focus{
+  outline:none; border-color:var(--primary-color);
+  box-shadow: 0 0 0 .18rem rgba(56,230,176,.22);
+}
+.btn-clear{
+  background:transparent; border:1px solid var(--text-secondary);
+  color:var(--text-light); padding:10px 14px; border-radius:10px;
+  cursor:pointer; transition:all .2s ease;
+}
+.btn-clear:hover{ border-color:var(--primary-color); color:var(--primary-color); }
+.btn-clear:disabled{ opacity:.5; cursor:not-allowed; }
+
+/* —— TABLA (base limpia) ———————————————————— */
+.table-wrap{
+  overflow:auto; border-radius:12px;
+}
+.ticket-list table{
+width:100%;   
+min-width:1200px;                           /* súbele este valor (antes: 880px) */
+border-collapse:collapse; 
+font-size:.92rem;
+table-layout:auto;                          /* evita que se compriman (por si estaba en fixed) */
+}
+.ticket-list thead th{
+  position:sticky; top:0; z-index:1;
+  text-align:left; padding:.80rem .75rem;
+  font-weight:700; letter-spacing:.2px;
+}
+.ticket-list th, .ticket-list td{
+  white-space:nowrap;        /* no cortar líneas (ensancha columnas) */
+}
+.ticket-list{ overflow-x:auto; }  
+
+/* —— BADGES / CHIPS ——————————————————————— */
+.badge{
+  display:inline-block; padding:4px 10px; border-radius:999px;
+  font-size:.78rem; font-weight:700; letter-spacing:.2px;
+}
+.badge.chip.ok{ background: rgba(56,230,176,.18); color: var(--primary-color); border:1px solid rgba(56,230,176,.35); }
+.badge.chip.no{ background: rgba(255,255,255,.08); color: var(--text-secondary); border:1px solid rgba(255,255,255,.15); }
+
+/* Prioridades */
+.prio.critico{ color:#fff; background:#c81e1e; border:1px solid #ef4444; }
+.prio.alta   { color:#fff; background:#ef4444; border:1px solid #f87171; }
+.prio.media  { color:#1f2937; background:#fbbf24; border:1px solid #f59e0b; }
+.prio.baja   { color:#0f172a; background:#a3e635; border:1px solid #84cc16; }
+
+/* Estados */
+.estado.pendiente  { background:#cce5ff; border:1px solid #b8daff; color:#004085; }
+.estado.en-proceso { background:#d1ecf1; border:1px solid #bee5eb; color:#0c5460; }
+.estado.cerrado    { background:#d4edda; border:1px solid #c3e6cb; color:#155724; }
+.estado.abierto,
+.estado.reabierto  { background:#fff3b0; border:1px solid #ffe066; color:#856404; }
+
+/* Botón acción - aqui empiezo*/
+/* =================== Botón acción mejorado =================== */
+.btn-ver{
+  /* Tokens (puedes mapear a tus variables de marca) */
+  --btn-start: var(--btn-gradient-start, #16a34a);   /* verde 600 */
+  --btn-end:   var(--btn-gradient-end,   #10b981);   /* verde 500 */
+  --btn-fg:    var(--btn-fg, #ffffff);
+  --btn-ring:  rgba(16, 185, 129, .35);              /* foco */
+  --btn-glow:  rgba(16, 185, 129, .45);              /* sombra */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+
+  padding: 10px 16px;           /* base */
+  border: 0;
+  border-radius: 12px;
+  color: var(--btn-fg);
+  font-size: .95rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  user-select: none;
+
+  background: linear-gradient(135deg, var(--btn-start), var(--btn-end));
+  box-shadow:
+    0 10px 22px var(--btn-glow),
+    inset 0 1px 0 rgba(255,255,255,.15);
+
+  transition:
+    transform .15s ease,
+    box-shadow .2s ease,
+    filter .2s ease;
+  will-change: transform, box-shadow;
+  isolation: isolate;
+}
+
+/* brillo suave arriba */
+.btn-ver::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient( to bottom, rgba(255,255,255,.22), rgba(255,255,255,0) 40% );
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+}
+
+/* Hover/Active */
+.btn-ver:hover{
+  transform: translateY(-1px);
+  box-shadow:
+    0 14px 28px var(--btn-glow),
+    inset 0 1px 0 rgba(255,255,255,.18);
+  filter: saturate(1.05);
+}
+.btn-ver:active{
+  transform: translateY(0);
+  box-shadow:
+    0 8px 18px var(--btn-glow),
+    inset 0 2px 6px rgba(0,0,0,.18);
+  filter: saturate(1);
+}
+
+/* Foco accesible */
+.btn-ver:focus-visible{
+  outline: none;
+  box-shadow:
+    0 0 0 .18rem var(--btn-ring),
+    0 10px 22px var(--btn-glow);
+}
+
+/* Deshabilitado */
+.btn-ver:disabled,
+.btn-ver[aria-disabled="true"]{
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+/*aqui termina*/
+/* Empty */
+.empty{ text-align:center; color:var(--text-secondary); padding:1.2rem 0; }
+
+/* Paginación */
+.pagination{
+  margin-top:12px; display:flex; justify-content:center; gap:12px;
+  color:var(--text-dark);
+}
+.pagination button{
+  padding:8px 14px; border:1px solid rgba(255,255,255,.12); border-radius:10px;
+  background:var(--input-bg); color:var(--text-light); cursor:pointer;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.pagination button:hover:not(:disabled){
+  transform: translateY(-1px);
+  border-color: var(--primary-color);
+  box-shadow: 0 6px 16px rgba(56,230,176,.25);
+}
+.pagination button:disabled{ opacity:.55; cursor:not-allowed; }
+
+/* Responsive */
+@media (max-width: 768px){
+  .filter-bar{ gap:8px; }
+  .filter-bar input, .filter-bar select{ flex:1 1 100%; max-width:100%; }
+  .table-wrap{ border-radius:10px; }
+  .btn-ver{ padding:6px 10px; font-size:.82rem; }
+}
+
+/* —— THEME “SEAGLASS” (suave, legible) ————————— */
+.ticket-container.theme-seaglass{
+  --tbl-surface: #0f2330;
+  --tbl-head:    #123041;
+  --tbl-odd:     #102a3b;
+  --tbl-even:    #0e2d41;
+  --tbl-hover:   #153a52;
+  --tbl-border:  rgba(255,255,255,.07);
+  --tbl-shadow:  0 10px 24px rgba(6, 24, 33, .6);
+}
+.ticket-container.theme-seaglass .table-wrap{
+  background: var(--tbl-surface);
+  border: 1px solid var(--tbl-border);
+  box-shadow: var(--tbl-shadow);
+}
+.ticket-container.theme-seaglass .ticket-list thead th{
+  background: var(--tbl-head);
+  border-bottom: 1px solid var(--tbl-border);
+  color: var(--text-light);
+}
+.ticket-container.theme-seaglass .ticket-list tbody tr:nth-child(odd){  background: var(--tbl-odd); }
+.ticket-container.theme-seaglass .ticket-list tbody tr:nth-child(even){ background: var(--tbl-even); }
+.ticket-container.theme-seaglass .ticket-list tbody tr:hover{          background: var(--tbl-hover); }
+.ticket-container.theme-seaglass .ticket-list td{
+  border-bottom: 1px solid var(--tbl-border);
+  color: var(--text-light);
+}
+.ticket-container.theme-seaglass .empty{
+  color: color-mix(in srgb, var(--text-light) 70%, #9fb3c8);
+}
+/* ================================
+   THEME “MIST” (claro, profesional)
+   Actívalo con: .ticket-container.theme-mist
+===================================*/
+
+/* Paleta local del tema (azules claros y grises fríos) */
+.ticket-container.theme-mist{
+  --mist-surface: #e9f2f7;       /* panel tabla */
+  --mist-head:    #f3f8fb;       /* thead pegajoso */
+  --mist-odd:     #f9fbfd;       /* filas impares */
+  --mist-even:    #f2f7fb;       /* filas pares */
+  --mist-hover:   #e6f0f6;       /* hover */
+  --mist-border:  #d6e3ec;       /* separadores */
+  --mist-shadow:  0 8px 22px rgba(25, 55, 85, .15);
+
+  /* texto adaptado para fondos claros */
+  --mist-text:    #0f172a;       /* primario */
+  --mist-muted:   #4b5563;       /* secundario */
+}
+
+/* Filtros: panel más claro y limpio */
+.ticket-container.theme-mist .filter-bar{
+  background: var(--mist-surface);
+  border: 1px solid var(--mist-border);
+  box-shadow: var(--mist-shadow);
+}
+.ticket-container.theme-mist .filter-bar input,
+.ticket-container.theme-mist .filter-bar select{
+  background: #ffffff;
+  color: var(--mist-text);
+  border: 1px solid var(--mist-border);
+}
+.ticket-container.theme-mist .filter-bar input::placeholder{
+  color: var(--mist-muted);
+}
+
+/* Botón “Limpiar” que contraste */
+.ticket-container.theme-mist .btn-clear{
+  border-color: #0ea5a5;            /* turquesa suave */
+  color: #0ea5a5;
+  background: #ffffff;
+}
+.ticket-container.theme-mist .btn-clear:hover{
+  border-color: #0891b2;
+  color: #0891b2;
+  background: #f0fdff;
+}
+
+/* Tabla clara */
+.ticket-container.theme-mist .table-wrap{
+  background: var(--mist-surface);
+  border: 1px solid var(--mist-border);
+  box-shadow: var(--mist-shadow);
+}
+.ticket-container.theme-mist .ticket-list table{
+  color: var(--mist-text);
+}
+.ticket-container.theme-mist .ticket-list thead th{
+  background: var(--mist-head);
+  color: var(--mist-text);
+  border-bottom: 1px solid var(--mist-border);
+}
+.ticket-container.theme-mist .ticket-list td{
+  color: var(--mist-text);
+  border-bottom: 1px solid var(--mist-border);
+}
+
+/* Zebra + hover suaves */
+.ticket-container.theme-mist .ticket-list tbody tr:nth-child(odd){
+  background: var(--mist-odd);
+}
+.ticket-container.theme-mist .ticket-list tbody tr:nth-child(even){
+  background: var(--mist-even);
+}
+.ticket-container.theme-mist .ticket-list tbody tr:hover{
+  background: var(--mist-hover);
+}
+
+/* Badges/estado: mantienen alto contraste en claro */
+.ticket-container.theme-mist .badge.chip.no{
+  background: #eef2f6;
+  color: #64748b;
+  border: 1px solid #d8e1ea;
+}
+
+/* Paginación en claro */
+.ticket-container.theme-mist .pagination button{
+  background: #ffffff;
+  color: var(--mist-text);
+  border-color: var(--mist-border);
+}
+.ticket-container.theme-mist .pagination button:hover:not(:disabled){
+  border-color: var(--primary-color);
+  box-shadow: 0 6px 16px rgba(56,230,176,.20);
+}
+
+/* Contadores/empty text */
+.ticket-container.theme-mist .lt-count,
+.ticket-container.theme-mist .empty{
+  color: var(--mist-muted);
+}
+/* Prioridades mejoradas */
+.prio.critico {
+  color: #fff;
+  background: linear-gradient(135deg, #ff3d00, #ff5722); /* rojo cálido degradado */
+  border: 1px solid #ff3300;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(255,77,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.prio.critico:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(255,77,0,0.45);
+}
+
+/* Las demás prioridades pueden tener degradados suaves para resaltar */
+.prio.alta   { color:#fff; background: #ff7043; border:1px solid #f87171; }
+.prio.media  { color:#1f2937; background:#fcd34d; border:1px solid #fbbf24; }
+.prio.baja   { color:#0f172a; background:#a3e635; border:1px solid #84cc16; }
+
+/* Cabecera de tabla clicable para ordenar */
+.ticket-list thead th {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* Indicador de orden (triángulo arriba/abajo) */
+.ticket-list thead th.sort-asc::after,
+.ticket-list thead th.sort-desc::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  transform: translateY(-50%);
+}
+
+.ticket-list thead th.sort-asc::after {
+  border-bottom: 8px solid var(--primary-color); /* flecha arriba */
+}
+
+.ticket-list thead th.sort-desc::after {
+  border-top: 8px solid var(--primary-color); /* flecha abajo */
+}
+
+/* Hover en cabecera */
+.ticket-list thead th:hover {
+  background-color: rgba(255, 77, 0, 0.1); /* cálido */
+}
+.ticket-list thead th {
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.ticket-list thead th.sort-asc::after,
+.ticket-list thead th.sort-desc::after {
+  content: '';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  width: 0; 
+  height: 0; 
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  transform: translateY(-50%);
+}
+
+.ticket-list thead th.sort-asc::after {
+  border-bottom: 8px solid #ff4d00; /* rojo cálido */
+}
+
+.ticket-list thead th.sort-desc::after {
+  border-top: 8px solid #ff4d00; /* rojo cálido */
+}
+
+.ticket-list thead th:hover {
+  background-color: rgba(255,77,0,0.08); /* hover cálido */
+}
+/* Contenedor del badge */
+.estado-badge-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+/* Badge principal */
+.estado-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  color: #fff;
+}
+
+/* Colores cálidos para cada estado */
+.estado-badge.abierto { background: #ff9f43; }        /* naranja */
+.estado-badge.en-proceso { background: #f08a5d; }    /* coral */
+.estado-badge.atendido { background: #e802fd; }      /* morado cálido */
+.estado-badge.cerrado { background: #00e9a3; }       /* rojo suave */
+.estado-badge.reabierto { background: #f7b32b; }     /* amarillo cálido */
+
+/* Efecto hover */
+.estado-badge:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Dropdown de selección */
+.estado-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: #fff5eb;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  z-index: 100;
+  overflow: hidden;
+  min-width: 120px;
+  animation: fadeInDropdown 0.2s ease;
+}
+
+.estado-dropdown div {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+/* Colores en dropdown */
+.estado-dropdown div.abierto { background: #ff9f43; color: #fff; }
+.estado-dropdown div.en-proceso { background: #f08a5d; color: #fff; }
+.estado-dropdown div.atendido { background: #e802fd; color: #fff; }
+.estado-dropdown div.cerrado { background: #00e9a3; color: #fff; }
+.estado-dropdown div.reabierto { background: #f7b32b; color: #333; }
+
+.estado-dropdown div:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+/* Animación de aparición */
+@keyframes fadeInDropdown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

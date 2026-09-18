@@ -1,0 +1,91 @@
+<div class="container mt-5" role="main">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+
+      <!-- Logo y botón alineados en la misma fila -->
+      <div class="logo-box d-flex align-items-center justify-content-between mb-4 shadow-sm p-3">
+        <div class="d-flex align-items-center gap-3">
+          <img src="/assets/img/login/logo.png" alt="Apex" class="emp-logo" />
+          <div>
+            <h2 class="emp-sub mb-0">Bienvenido</h2>
+            <p class="emp-sub mb-0">Responderemos sus preguntas y/o consultas</p>
+          </div>
+        </div>
+
+        <!-- Botón a la derecha -->
+        <button [routerLink]="['/listatickets']" class="btn btn-primary">
+          Retornar
+        </button>
+      </div>
+
+      <h2 class="text-center mb-4">Ticket #{{idticket}}</h2>
+
+      <!-- Detalles del Cliente -->
+      <div class="card mb-3 shadow-sm cliente-card">
+        <div class="cliente-field">
+          <strong>Nombre:</strong> <span class="cliente-text">{{respuestas[0]?.cliente_nombres}}
+            {{respuestas[0]?.cliente_apellidos}}</span>
+        </div>
+        <div class="cliente-field">
+          <strong>Correo:</strong> <span class="cliente-text">{{respuestas[0]?.cliente_correo}}</span>
+        </div>
+        <div class="cliente-field">
+          <strong>Celular:</strong> <span class="cliente-text">{{respuestas[0]?.cliente_celular}}</span>
+        </div>
+        <div class="cliente-field">
+          <strong>Documento:</strong> <span class="cliente-text">{{respuestas[0]?.cliente_documento}}</span>
+        </div>
+        <div class="cliente-field">
+          <p><strong>Fecha de solicitud:</strong><span class="cliente-text">{{ respuestas[0]?.fechacreacion |
+              date:'dd/MM/yyyy HH:mm' }}</span></p>
+        </div>
+        <div class="cliente-field">
+          <p><strong>Fecha de cierre:</strong> <span class="cliente-text">{{ respuestas[0]?.fechacierre |
+              date:'dd/MM/yyyy HH:mm' }}</span></p>
+        </div>
+        <div class="cliente-field">
+          <strong>Solicitud:</strong> <span class="cliente-text">{{respuestas[0]?.descripcion}}</span>
+        </div>
+  
+      </div>
+
+      <div class="filters d-flex justify-content-start mb-2 gap-2">
+        <input type="text" class="form-control form-control-sm" placeholder="Filtrar por usuario"
+          [(ngModel)]="filtroUsuario" />
+        <input type="date" class="form-control form-control-sm" placeholder="Filtrar por fecha"
+          [(ngModel)]="filtroFecha" />
+        <input type="text" class="form-control form-control-sm" placeholder="Filtrar por mensaje"
+          [(ngModel)]="filtroContenido" />
+      </div>
+
+      <!-- Chat -->
+      <div class="chat-box">
+        <div *ngFor="let respuesta of respuestasFiltradas; let i = index"
+          class="chat-message mb-2 animate__animated animate__fadeInUp">
+          <div class="d-flex mb-1" [ngClass]="{'justify-content-end': respuesta.usuario_nombres === loggedInUserName, 
+                     'justify-content-start': respuesta.usuario_nombres !== loggedInUserName}">
+            <div class="chat-bubble p-2 rounded" [ngClass]="{'bg-light': respuesta.usuario_nombres === loggedInUserName, 
+                       'bg-primary text-white': respuesta.usuario_nombres !== loggedInUserName}">
+              <strong class="text-uppercase" [ngClass]="{'text-dark': respuesta.usuario_nombres === loggedInUserName, 
+                            'text-light': respuesta.usuario_nombres !== loggedInUserName}">
+                {{respuesta.usuario_apellidos}} {{respuesta.usuario_nombres}}
+              </strong>
+              <span class="chat-time">({{respuesta.fechaRespuesta | date:'dd/MM/yyyy HH:mm'}})</span>
+              <p class="mb-0 respuesta-text">{{respuesta.respuesta}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Formulario de respuesta -->
+      <div class="mt-3 d-flex">
+        <!-- Botón enviar al lado derecho -->
+        <button class="btn btn-primary ml-5" (click)="registrarRespuesta()" [disabled]="!nuevaRespuesta.trim()">
+          <i class="btn btn-primary w-100" class="fas fa-paper-plane"></i> Enviar
+        </button>
+        <textarea class="form-control shadow-sm" [(ngModel)]="nuevaRespuesta" placeholder="Escribe tu respuesta..."
+          rows="2" style="resize:none;" required></textarea>
+      </div>
+
+    </div>
+  </div>
+</div>
